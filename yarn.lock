@@ -112,6 +112,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.18.20.tgz#786c5f41f043b07afb1af37683d7c33668858f6d"
   integrity sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ==
 
+"@types/p5@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@types/p5/-/p5-1.7.3.tgz#727a5fdc932abd36b83be35f1643846bc3ba40a4"
+  integrity sha512-sYeos5Zbb5dx4jp5uDnZDtW3St6+9RtLCi7n2Rl6Ok2a5ofRIWDbXEigl++ppqgAyB20S8czlrrrmzLS1AwJPA==
+
 esbuild@^0.18.10:
   version "0.18.20"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.18.20.tgz#4709f5a34801b43b799ab7d6d82f7284a9b7a7a6"
@@ -149,6 +154,11 @@ nanoid@^3.3.6:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.7.tgz#d0c301a691bc8d54efa0a2226ccf3fe2fd656bd8"
   integrity sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==
+
+p5@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/p5/-/p5-1.8.0.tgz#91a720357a4377d85405f29cdd276cf1fa4eb45c"
+  integrity sha512-LHzRRl+aWEZVXmK+L9TDRNw5zm90wvwMdY7yTmsFkdNeXrU9n2KSZbonCTXkyGgriguovxJrDDgyhkynOxWB1A==
 
 picocolors@^1.0.0:
   version "1.0.0"
