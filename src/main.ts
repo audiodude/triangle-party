@@ -2,8 +2,11 @@ import './style.css';
 import p5 from 'p5';
 
 class Triangle {
+  private subtriangles: Triangle[] = [];
+
   constructor(
     private readonly p: p5,
+    private readonly color: p5.Color,
     private x1: number,
     private y1: number,
     private x2: number,
@@ -13,16 +16,12 @@ class Triangle {
   ) {}
 
   draw() {
+    this.p.fill(this.color);
     this.p.triangle(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3);
   }
 
   mutate() {
-    this.x1 += -5 + Math.random() * 10;
-    this.y1 += -5 + Math.random() * 10;
-    this.x2 += -5 + Math.random() * 10;
-    this.y2 += -5 + Math.random() * 10;
-    this.x3 += -5 + Math.random() * 10;
-    this.y3 += -5 + Math.random() * 10;
+    this.color.setBlue(Math.random() * 255);
   }
 }
 
@@ -31,13 +30,32 @@ const sketch = (p: p5) => {
 
   p.setup = () => {
     p.createCanvas(1280, 720);
-    const t = new Triangle(p, 520, 400, 640, 280, 780, 400);
+    const t = new Triangle(
+      p,
+      p.color(30, 40, 150),
+      520,
+      400,
+      640,
+      280,
+      780,
+      400,
+    );
     triangles.push(t);
+    const t2 = new Triangle(
+      p,
+      p.color(30, 100, 150),
+      320,
+      200,
+      440,
+      80,
+      580,
+      200,
+    );
+    triangles.push(t2);
   };
 
   p.draw = () => {
     p.background(0);
-    p.fill(255);
     for (const t of triangles) {
       t.mutate();
       t.draw();
