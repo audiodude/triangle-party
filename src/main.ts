@@ -12,6 +12,21 @@ declare interface TriPoints {
   right: Point;
 }
 
+const COLORS = [
+  [127, 198, 164],
+  [51, 30, 54],
+  [232, 174, 183],
+  [130, 115, 92],
+  [124, 198, 254],
+];
+
+function randColor(p: p5) {
+  const arr = COLORS;
+  const c = arr[Math.floor(Math.random() * arr.length)];
+  const ans = p.color(c[0], c[1], c[2]);
+  return ans;
+}
+
 function rotatePoint(n: Point, rotation: number): Point {
   return {
     x: n.x * Math.cos(rotation) - n.y * Math.sin(rotation),
@@ -58,44 +73,61 @@ class Triangle {
     }
   }
 
+  // completeDiamond(): TriPoints {
+  //   return { top: { x: 0, y: 0 }, left: { x: 0, y: 0 }, right: { x: 0, y: 0 } };
+  // }
+
   subPoints(modifier: number): TriPoints {
-    const right = this.top;
-    const top = this.left;
-    let left = this.right;
-    const distX = (right.x - left.x) / 2;
-    const distY = (right.y - right.y) / 2;
+    let right, left, top;
+    if (modifier == -1) {
+      right = this.top;
+      top = this.left;
+      left = { x: this.top.x - (this.top.x - this.left.x) * 2, y: this.top.y };
+    } else {
+      left = this.top;
+      top = this.right;
+      right = {
+        x: this.top.x + (this.right.x - this.top.x) * 2,
+        y: this.top.y,
+      };
+    }
     return {
-      left: { x: left.x + distX * modifier, y: left.y + distY * modifier },
+      left,
       right,
       top,
     };
   }
 
   iterRotate() {
-    if (this.counter > 49) {
+    if (this.counter >= 120) {
       return;
     }
 
-    const around = this.modifier == 1 ? this.left : this.right;
-    this.left = rotateAround(this.left, around, 2 * Math.PI - Math.PI / 100);
-    this.top = rotateAround(
-      this.top,
+    // const around = this.modifier == 1 ? this.left : this.right;
+    const around = this.top;
+    this.left = rotateAround(
+      this.left,
       around,
-      2 * Math.PI - (Math.PI / 100) * -this.modifier,
+      2 * Math.PI - (Math.PI / 60) * -this.modifier,
     );
+    // this.top = rotateAround(
+    //   this.top,
+    //   around,
+    //   2 * Math.PI - (Math.PI / 60) * this.modifier,
+    // );
     this.right = rotateAround(
       this.right,
       around,
-      2 * Math.PI - (Math.PI / 100) * -this.modifier,
+      2 * Math.PI - (Math.PI / 60) * -this.modifier,
     );
   }
 
   mutate() {
-    if (this.counter == 60 && this.depth < 2) {
+    if (this.counter == 60 && this.depth < 3) {
       let subPts = this.subPoints(1);
       const sub1 = new Triangle(
         this.p,
-        this.p.color(Math.random() * 256),
+        randColor(this.p),
         subPts.left,
         subPts.top,
         subPts.right,
@@ -106,17 +138,29 @@ class Triangle {
       subPts = this.subPoints(-1);
       const sub2 = new Triangle(
         this.p,
-        this.p.color(30, 150, 30),
+        randColor(this.p),
         subPts.left,
         subPts.top,
         subPts.right,
         -1,
         this.depth + 1,
       );
-      console.log(sub1);
       this.subtriangles.push(sub1);
       this.subtriangles.push(sub2);
     }
+    // if (this.counter == 60 && this.depth == 0) {
+    //   const d = this.completeDiamond();
+    //   const sub1 = new Triangle(
+    //     this.p,
+    //     randColor(this.p),
+    //     d.left,
+    //     d.top,
+    //     d.right,
+    //     1,
+    //     this.depth + 1,
+    //   );
+    //   this.subtriangles.push(sub1);
+    // }
     for (const sub of this.subtriangles) {
       sub.mutate();
       sub.iterRotate();
@@ -134,7 +178,7 @@ const sketch = (p: p5) => {
 
     const t = new Triangle(
       p,
-      p.color(30, 100, 150),
+      randColor(p),
       { x: 520, y: 400 },
       { x: 640, y: 198 },
       { x: 760, y: 400 },
